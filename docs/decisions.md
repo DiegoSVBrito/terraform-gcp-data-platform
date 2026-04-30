@@ -1,46 +1,46 @@
-# Decisoes Tecnicas
+# Technical Decisions
 
 ## ADR-001: Terraform over Pulumi
 
-**Status:** Aceito
+**Status:** Accepted
 
-**Contexto:** Necessidade de provisionar infraestrutura GCP de forma declarativa e versionavel.
+**Context:** Need to provision GCP infrastructure in a declarative and versioned way.
 
-**Decisao:** Utilizar Terraform com HCL.
+**Decision:** Use Terraform with HCL.
 
-**Motivos:**
-- Terraform e o padrao da industria para IaC multi-cloud
-- HCL declarativo torna o estado desejado legivel e auditavel
-- Maior ecossistema de providers e modules
-- State locking via GCS previne corridas
-- Curva de aprendizado menor para equipes heterogeneas
+**Rationale:**
+- Terraform is the industry standard for multi-cloud IaC
+- Declarative HCL makes desired state readable and auditable
+- Larger ecosystem of providers and modules
+- GCS state locking prevents concurrent apply races
+- Lower learning curve for heterogeneous teams
 
-**Consequencias:** Sintaxe HCL menos flexivel que linguagens de programacao geral, mas suficiente para infraestrutura de dados.
+**Consequences:** HCL is less flexible than general-purpose languages, but sufficient for data infrastructure.
 
-## ADR-002: Remote State no GCS
+## ADR-002: Remote State in GCS
 
-**Status:** Aceito
+**Status:** Accepted
 
-**Contexto:** Gerenciamento de state do Terraform em ambiente colaborativo.
+**Context:** Managing Terraform state in a collaborative environment.
 
-**Decisao:** Armazenar state no Cloud Storage com locking nativo.
+**Decision:** Store state in Cloud Storage with native locking.
 
-**Motivos:**
-- State locking automatico previne apply simultaneo
-- Versioning do bucket permite rollback do state
-- Sem custo adicional (bucket GCS e barato)
-- Integracao nativa com GCP
+**Rationale:**
+- Automatic state locking prevents concurrent applies
+- Bucket versioning enables state rollback
+- No additional cost (GCS buckets are cheap)
+- Native integration with GCP
 
-## ADR-003: Estrutura Modular
+## ADR-003: Modular Structure
 
-**Status:** Aceito
+**Status:** Accepted
 
-**Contexto:** Organizacao do codigo Terraform para reuso e manutenibilidade.
+**Context:** Code organization for reuse and maintainability.
 
-**Decisao:** Cada recurso (storage, bigquery, pubsub, iam) como modulo independente.
+**Decision:** Each resource (storage, bigquery, pubsub, iam) as an independent module.
 
-**Motivos:**
-- Reuso entre projetos e ambientes
-- Testes isolados por modulo
-- Composicao flexivel (instanciar apenas o necessario)
-- Responsabilidade unica facilita revisao de codigo
+**Rationale:**
+- Reuse across projects and environments
+- Isolated testing per module
+- Flexible composition (instantiate only what is needed)
+- Single responsibility facilitates code review
