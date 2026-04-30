@@ -1,0 +1,6 @@
+project_id   = "my-gcp-project"
+region       = "us-east1"
+environment  = "dev"
+bucket_name  = "data-lake-bucket"
+dataset_id   = "data_warehouse"
+topic_name   = "data-events"
